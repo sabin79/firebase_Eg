@@ -121,17 +121,14 @@ class RegisterPage extends StatelessWidget {
       UserCredential userCredential = await FirebaseAuth.instance
           .createUserWithEmailAndPassword(email: email, password: password);
 
-      await FirebaseFirestore.instance
-          .collection("users")
-          .doc(userCredential.user!.uid)
-          .set({
+      await FirebaseFirestore.instance.collection("users").doc().set({
         "name": name,
         "email": email,
         "password": password,
         "createdate": DateTime.now(),
       });
       print("user account created successfully");
-    } on FirebaseAuthException catch (e) {
+    } catch (e) {
       print('Error: $e');
     }
   }
